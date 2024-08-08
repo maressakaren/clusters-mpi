@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  master:
+    image: mpi_image
+    container_name: master
+    hostname: master
+    command: ["mpirun", "-np", "4", "-H", "master,slaveone,slavetwo", "/home/mpiuser/file_mpi"]
+    networks:
+      - mpi_network
+
+  slaveone:
+    image: mpi_image
+    container_name: slaveone
+    hostname: slaveone
+    networks:
+      - mpi_network
+
+  slavetwo:
+    image: mpi_image
+    container_name: slavetwo
+    hostname: slavetwo
+    networks:
+      - mpi_network
+
+networks:
+  mpi_network:
+    driver: bridge
+
